@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nakawin Casino - Игровое казино с призами</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/cases.css">
+    <link rel="stylesheet" href="css/wheel.css">
+    <link rel="stylesheet" href="css/inventory.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="images/nakawin.png" alt="Nakawin Logo" class="logo-image">
+                <span class="logo-text"></span>
+            </div>
+            <div class="user-info" id="user-info" style="display: none;">
+                <span class="balance-text">Баланс: </span>
+                <span id="user-balance" class="balance-amount">0</span>
+                <span class="balance-currency"> монет</span>
+                <button id="deposit-button" class="neon-button deposit-btn">Пополнить</button>
+                <button id="logout-button" class="neon-button logout-btn">Выйти</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Auth Content -->
+            <div id="auth-content" class="auth-container">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Вход</button>
+                    <button class="auth-tab" data-tab="register">Регистрация</button>
+                </div>
+
+                <div class="auth-forms">
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active">
+                        <h2>Добро пожаловать!</h2>
+                        <div class="form-group">
+                            <input type="text" id="login-username" placeholder="Имя пользователя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="login-password" placeholder="Пароль" required>
+                        </div>
+                        <button type="submit" class="neon-button auth-submit">Войти</button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="register-form" class="auth-form">
+                        <h2>Создать аккаунт</h2>
+                        <div class="form-group">
+                            <input type="text" id="register-username" placeholder="Имя пользователя" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="register-gameNickname" placeholder="Игровой никнейм" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="register-server" placeholder="Сервер" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="register-bankAccount" placeholder="Банковский счет" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="register-password" placeholder="Пароль" required>
+                        </div>
+                        <button type="submit" class="neon-button auth-submit">Зарегистрироваться</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Game Content (hidden initially) -->
+            <div id="game-content" style="display: none;">
+                <!-- Cases Tab -->
+                <div id="cases-tab" class="tab-content active">
+                    <div class="cases-container">
+                        <h2 class="section-title">🎁 Кейсы</h2>
+                        <div id="cases-grid" class="cases-grid">
+                            <!-- Cases will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wheel Tab -->
+                <div id="wheel-tab" class="tab-content">
+                    <div class="wheel-container">
+                        <h2 class="section-title">🎡 Колесо Фортуны</h2>
+                        <div class="wheel-wrapper">
+                            <div class="wheel" id="fortune-wheel">
+                                <div class="wheel-center"></div>
+                                <div class="wheel-pointer"></div>
+                            </div>
+                        </div>
+                        <button id="spin-button" class="neon-button spin-button">GO!</button>
+                        <div id="wheel-items" class="wheel-items-info">
+                            <!-- Wheel items info will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inventory Tab -->
+                <div id="inventory-tab" class="tab-content">
+                    <div class="inventory-container">
+                        <h2 class="section-title">🎒 Инвентарь</h2>
+                        <div class="inventory-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Предметов:</span>
+                                <span id="total-items" class="stat-value">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Общая стоимость:</span>
+                                <span id="total-value" class="stat-value">0</span>
+                            </div>
+                        </div>
+                        <div id="inventory-grid" class="inventory-grid">
+                            <!-- Inventory items will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs" id="nav-tabs" style="display: none;">
+            <button class="tab-button active" data-tab="cases">
+                <span class="tab-icon">🎁</span>
+                <span class="tab-text">Кейсы</span>
+            </button>
+            <button class="tab-button" data-tab="wheel">
+                <span class="tab-icon">🎡</span>
+                <span class="tab-text">Колесо</span>
+            </button>
+            <button class="tab-button" data-tab="inventory">
+                <span class="tab-icon">🎒</span>
+                <span class="tab-text">Инвентарь</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Modals -->
+    <div id="prize-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content prize-modal-content">
+            <div class="prize-header">
+                <h3>Поздравляем!</h3>
+                <span class="prize-close" onclick="closeModal('prize-modal')">×</span>
+            </div>
+            <div class="prize-body">
+                <img id="prize-image" src="" alt="Prize" class="prize-image">
+                <h4 id="prize-name" class="prize-title"></h4>
+                <p id="prize-value" class="prize-value"></p>
+            </div>
+            <div class="prize-actions">
+                <button id="sell-prize" class="modal-button sell-button">Продать</button>
+                <button id="keep-prize" class="modal-button keep-button">В инвентарь</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deposit-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content deposit-modal-content">
+            <div class="deposit-header">
+                <h3>Пополнение баланса</h3>
+                <span class="deposit-close" onclick="closeModal('deposit-modal')">×</span>
+            </div>
+            <div class="deposit-body">
+                <div class="deposit-info">
+                    <p>Переведите деньги на карту:</p>
+                    <div class="card-info">
+                        <span class="card-number">XXXX XXXX XXXX XXXX</span>
+                        <span class="bank-name">Tinkoff Bank</span>
+                    </div>
+                    <p class="warning-text">⚠️ ОБЯЗАТЕЛЬНО В КОММЕНТАРИЯХ К ПЕРЕВОДУ УКАЖИТЕ СВОЙ НИК НА САЙТЕ</p>
+                    <p class="deposit-note">После перевода нажмите "Подтвердить оплату"</p>
+                </div>
+            </div>
+            <div class="deposit-actions">
+                <button id="confirm-payment" class="neon-button confirm-button">Подтвердить оплату</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Загрузка...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cases.js"></script>
+    <script src="js/wheel.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

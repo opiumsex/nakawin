@@ -1,0 +1,185 @@
+.cases-container {
+  padding: 20px;
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.case-item {
+  background: linear-gradient(135deg, rgba(8, 17, 25, 0.8), rgba(5, 10, 16, 0.9));
+  border: 2px solid var(--neon-purple);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.case-item::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--neon-purple), transparent, var(--neon-purple));
+  z-index: -1;
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.case-item:hover::before {
+  opacity: 1;
+}
+
+.case-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 
+    0 0 25px var(--neon-purple),
+    0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+.case-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px var(--neon-purple));
+  transition: transform 0.3s ease;
+}
+
+.case-item:hover .case-image {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.case-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--neon-blue);
+  text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
+}
+
+.case-price {
+  font-size: 16px;
+  color: var(--neon-yellow);
+  margin-bottom: 15px;
+}
+
+.case-items-count {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.case-open-button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
+  border: none;
+  border-radius: 15px;
+  color: var(--text-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.case-open-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--neon-purple);
+}
+
+/* Case opening animation */
+.case-opening {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 4000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.case-reel {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+  width: 80%;
+  height: 150px;
+  position: relative;
+}
+
+.reel-item {
+  min-width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--neon-blue);
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.reel-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.reel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 120px;
+  background: var(--neon-green);
+  box-shadow: 0 0 20px var(--neon-green);
+  z-index: 2;
+}
+
+/* Responsive cases */
+@media (max-width: 768px) {
+  .cases-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+  
+  .case-item {
+    padding: 15px;
+  }
+  
+  .case-image {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .case-name {
+    font-size: 16px;
+  }
+  
+  .case-price {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cases-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .case-item {
+    padding: 20px;
+  }
+}
